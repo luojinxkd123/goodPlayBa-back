@@ -4,8 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.luojin.springboot.entity.User;
 import org.luojin.springboot.service.IUserService;
+import org.luojin.springboot.web.ro.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,7 @@ public class UserController {
 
     @ApiOperation("获取用户")
     @GetMapping("/list")
-    public List<User> getUserList() {
-        return userService.list();
+    public JsonResponse<List<User>> getUserList() {
+        return JsonResponse.success(userService.list());
     }
 }
