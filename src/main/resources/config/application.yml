@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: dev
+  banner:
+    location: classpath:config/banner.txt
+swagger:
+  scanPath: org.luojin.springboot.web.controller
+logging:
+  config: classpath:config/logback-spring.xml
+  level:
+    org.luojin.springboot: debug
