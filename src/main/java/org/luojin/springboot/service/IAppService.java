@@ -1,7 +1,7 @@
 package org.luojin.springboot.service;
 
-import org.luojin.springboot.entity.App;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.luojin.springboot.entity.App;
 
 /**
  * <p>
