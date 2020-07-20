@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: dev
   banner:
     location: classpath:config/banner.txt
 swagger:

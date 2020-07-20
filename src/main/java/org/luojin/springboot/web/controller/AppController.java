@@ -9,6 +9,7 @@ import org.luojin.springboot.web.ro.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +30,7 @@ public class AppController {
 
     @GetMapping("/appList")
     public JsonResponse<List<String>> appList(){
+        LocalDate date = LocalDate.now();
         List<String> list = appService.list(
                 new QueryWrapper<App>()
                         .lambda()
@@ -37,9 +39,8 @@ public class AppController {
 
         List<String> successList = logService.list(
                 new QueryWrapper<Log>()
-                        .lambda()
-                        .eq(Log::getDate, new Date())
-                        .eq(Log::getStatus, Boolean.TRUE)
+                        .eq("date", date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth())
+                        .eq("status", Boolean.TRUE)
         ).stream().map(l -> l.getAppName()).collect(Collectors.toList());
         if (successList.size() > 0) {
             list = list.stream().filter(l -> !successList.contains(l)).collect(Collectors.toList());
