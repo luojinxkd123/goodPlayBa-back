@@ -51,15 +51,15 @@ public class AppController {
     @PostMapping("/addLog")
     public JsonResponse addLog(@RequestParam("appName") String appName,@RequestParam("isOk") String isOk,@RequestParam("log") String log) {
         Date date=new Date();
+        LocalDate localDate = LocalDate.now();
         Boolean status = Boolean.FALSE;
         if ("true".equals(isOk)) {
             status = true;
         }
         Log todayLog = logService.getOne(
                 new QueryWrapper<Log>()
-                        .lambda()
-                        .eq(Log::getAppName, appName)
-                        .eq(Log::getDate, date)
+                        .eq("app_name", appName)
+                        .eq("date", localDate.getYear()+"-"+localDate.getMonthValue()+"-"+localDate.getDayOfMonth())
         );
         if (Objects.isNull(todayLog)) {
             logService.getBaseMapper().insert(
