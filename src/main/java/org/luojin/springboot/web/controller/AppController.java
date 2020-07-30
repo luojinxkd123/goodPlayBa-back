@@ -49,7 +49,9 @@ public class AppController {
     }
 
     @PostMapping("/addLog")
-    public JsonResponse addLog(@RequestParam("appName") String appName,@RequestParam("isOk") String isOk,@RequestParam("log") String log) {
+    public JsonResponse addLog(@RequestParam("appName") String appName,
+                               @RequestParam("isOk") String isOk,
+                               @RequestParam("log") String log) {
         Date date=new Date();
         LocalDate localDate = LocalDate.now();
         Boolean status = Boolean.FALSE;
@@ -75,6 +77,19 @@ public class AppController {
             logService.updateById(todayLog);
         }
 
+        return JsonResponse.successMessage("成功");
+    }
+    
+    @PostMapping("/recordDiamond")
+    public JsonResponse recordDiamond(@RequestParam("appName") String appName,
+                               @RequestParam("score") Double score){
+        App app = appService.getOne(
+                new QueryWrapper<App>()
+                        .lambda()
+                        .eq(App::getAppName, appName)
+        );
+        app.setDiamond(score);
+        appService.updateById(app);
         return JsonResponse.successMessage("成功");
     }
 }

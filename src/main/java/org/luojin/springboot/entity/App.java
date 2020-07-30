@@ -32,10 +32,17 @@ public class App extends Model<App> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty(value = "应用名称")
     private String appName;
 
     @ApiModelProperty(value = "是否需要运行（1：需要，0：不需要）")
     private Boolean status;
+
+    @ApiModelProperty(value = "最新钻石数量")
+    private Double diamond;
+
+    @ApiModelProperty(value = "关联手机号")
+    private String telephone;
 
 
     @Override
