@@ -79,7 +79,7 @@ public class AppController {
 
         return JsonResponse.successMessage("成功");
     }
-    
+
     @PostMapping("/recordDiamond")
     public JsonResponse recordDiamond(@RequestParam("appName") String appName,
                                @RequestParam("score") Double score){
