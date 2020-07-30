@@ -1,14 +1,16 @@
 package org.luojin.springboot.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.ibatis.annotations.Param;
 import org.luojin.springboot.entity.App;
 import org.luojin.springboot.entity.Log;
 import org.luojin.springboot.service.IAppService;
 import org.luojin.springboot.service.ILogService;
 import org.luojin.springboot.web.ro.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -30,7 +32,7 @@ public class AppController {
     private ILogService logService;
 
     @PostMapping("/appList")
-    public JsonResponse<List<String>> appList(@Param("device")String deviceName){
+    public JsonResponse<List<String>> appList(@RequestParam("device")String deviceName){
         LocalDate date = LocalDate.now();
         List<String> list = appService.list(
                 new QueryWrapper<App>()
