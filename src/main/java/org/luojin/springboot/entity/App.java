@@ -44,6 +44,9 @@ public class App extends Model<App> {
     @ApiModelProperty(value = "关联手机号")
     private String telephone;
 
+    @ApiModelProperty(value = "关联设备名称")
+    private String deviceName;
+
 
     @Override
     protected Serializable pkVal() {

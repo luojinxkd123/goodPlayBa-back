@@ -36,6 +36,9 @@ public class Log extends Model<Log> {
     @ApiModelProperty(value = "应用名")
     private String appName;
 
+    @ApiModelProperty(value = "设备名称")
+    private String deviceName;
+
     @ApiModelProperty(value = "运行日期")
     private Date date;
 

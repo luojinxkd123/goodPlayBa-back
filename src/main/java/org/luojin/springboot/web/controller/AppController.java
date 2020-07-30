@@ -1,6 +1,7 @@
 package org.luojin.springboot.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.ibatis.annotations.Param;
 import org.luojin.springboot.entity.App;
 import org.luojin.springboot.entity.Log;
 import org.luojin.springboot.service.IAppService;
@@ -28,19 +29,22 @@ public class AppController {
     @Autowired
     private ILogService logService;
 
-    @GetMapping("/appList")
-    public JsonResponse<List<String>> appList(){
+    @PostMapping("/appList")
+    public JsonResponse<List<String>> appList(@Param("device")String deviceName){
         LocalDate date = LocalDate.now();
         List<String> list = appService.list(
                 new QueryWrapper<App>()
                         .lambda()
-                        .eq(App::getStatus, Boolean.TRUE).orderByAsc(App::getId)
+                        .eq(App::getStatus, Boolean.TRUE)
+                        .eq(App::getDeviceName,deviceName)
+                        .orderByAsc(App::getId)
         ).stream().map(l -> l.getAppName()).collect(Collectors.toList());
 
         List<String> successList = logService.list(
                 new QueryWrapper<Log>()
                         .eq("date", date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth())
                         .eq("status", Boolean.TRUE)
+                        .eq("device_name",deviceName)
         ).stream().map(l -> l.getAppName()).collect(Collectors.toList());
         if (successList.size() > 0) {
             list = list.stream().filter(l -> !successList.contains(l)).collect(Collectors.toList());
@@ -50,6 +54,7 @@ public class AppController {
 
     @PostMapping("/addLog")
     public JsonResponse addLog(@RequestParam("appName") String appName,
+                               @RequestParam("deviceName") String deviceName,
                                @RequestParam("isOk") String isOk,
                                @RequestParam("log") String log) {
         Date date=new Date();
@@ -61,12 +66,14 @@ public class AppController {
         Log todayLog = logService.getOne(
                 new QueryWrapper<Log>()
                         .eq("app_name", appName)
-                        .eq("date", localDate.getYear()+"-"+localDate.getMonthValue()+"-"+localDate.getDayOfMonth())
+                        .eq("date", localDate.getYear() + "-" + localDate.getMonthValue() + "-" + localDate.getDayOfMonth())
+                        .eq("device_name", deviceName)
         );
         if (Objects.isNull(todayLog)) {
             logService.getBaseMapper().insert(
                     new Log()
                             .setAppName(appName)
+                            .setDeviceName(deviceName)
                             .setDate(date)
                             .setLog(log)
                             .setStatus(status)
@@ -82,11 +89,13 @@ public class AppController {
 
     @PostMapping("/recordDiamond")
     public JsonResponse recordDiamond(@RequestParam("appName") String appName,
+                                      @RequestParam("deviceName") String deviceName,
                                @RequestParam("score") Double score){
         App app = appService.getOne(
                 new QueryWrapper<App>()
                         .lambda()
                         .eq(App::getAppName, appName)
+                        .eq(App::getDeviceName, deviceName)
         );
         app.setDiamond(score);
         appService.updateById(app);
