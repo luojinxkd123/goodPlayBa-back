@@ -103,4 +103,18 @@ public class AppController {
         appService.updateById(app);
         return JsonResponse.successMessage("成功");
     }
+    @PostMapping("/disabledApp")
+    public JsonResponse disabledApp(@RequestParam("appName") String appName,
+                                      @RequestParam("deviceName") String deviceName){
+        App app = appService.getOne(
+                new QueryWrapper<App>()
+                        .lambda()
+                        .eq(App::getAppName, appName)
+                        .eq(App::getDeviceName, deviceName)
+        );
+        app.setStatus(Boolean.FALSE);
+        app.setIsOver(Boolean.TRUE);
+        appService.updateById(app);
+        return JsonResponse.successMessage("成功");
+    }
 }

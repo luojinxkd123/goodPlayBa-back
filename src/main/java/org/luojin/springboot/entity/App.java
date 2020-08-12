@@ -47,6 +47,9 @@ public class App extends Model<App> {
     @ApiModelProperty(value = "关联设备名称")
     private String deviceName;
 
+    @ApiModelProperty(value = "是否结束")
+    private Boolean isOver;
+
 
     @Override
     protected Serializable pkVal() {
