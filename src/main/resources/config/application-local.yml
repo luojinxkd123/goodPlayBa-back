@@ -6,7 +6,7 @@ spring:
     name: MySpringboootApplication
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/haowanba?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://localhost:3306/x-defi?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
       username: root
       password:
   redis:
