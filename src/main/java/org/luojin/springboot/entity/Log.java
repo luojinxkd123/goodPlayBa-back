@@ -48,6 +48,9 @@ public class Log extends Model<Log> {
     @ApiModelProperty(value = "运行日志")
     private String log;
 
+    @ApiModelProperty(value = "ip")
+    private String ip;
+
 
     @Override
     protected Serializable pkVal() {

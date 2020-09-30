@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -55,7 +56,7 @@ public class AppController {
     }
 
     @PostMapping("/addLog")
-    public JsonResponse addLog(@RequestParam("appName") String appName,
+    public JsonResponse addLog(HttpServletRequest request, @RequestParam("appName") String appName,
                                @RequestParam("deviceName") String deviceName,
                                @RequestParam("isOk") String isOk,
                                @RequestParam("log") String log) {
@@ -79,6 +80,7 @@ public class AppController {
                             .setDate(date)
                             .setLog(log)
                             .setStatus(status)
+                            .setIp(request.getHeader("x-real-ip"))
             );
         } else {
             todayLog.setStatus(status);
